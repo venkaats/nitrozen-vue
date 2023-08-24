@@ -1,16 +1,10 @@
 <script>
 import NButtonContent from './NBtnContent';
-import strokeBtn from './../../directives/NStrokeBtn.js'
-import flatBtn from './../../directives/NFlatBtn.js'
 
 export default {
     name: 'nitrozen-button',
     components: {
         NButtonContent
-    },
-    directives: {
-        strokeBtn,
-        flatBtn
     },
     props: {
         href: {
@@ -51,6 +45,14 @@ export default {
         },
         state:{
             type:String
+        },
+        flat: {
+            type: Boolean,
+            default: false
+        },
+        stroke: {
+            type: Boolean,
+            default: false
         }
     },
     render(createElement) {
@@ -59,7 +61,9 @@ export default {
                 showProgress: this.showProgress,
                 icon: this.icon,
                 size:this.size,
-                iconColor:this.iconColor
+                iconColor:this.iconColor,
+                //flat: this.flat,
+                //stroke: this.stroke,
             }
         }, this.$slots.default)
 
@@ -73,7 +77,9 @@ export default {
                 'n-button-large': this.size == 'large',
                 'n-button-mid': this.size == 'medium',
                 'n-button-small': this.size == 'small',
-                'n-button-focused': this.focused
+                'n-button-focused': this.focused,
+                'n-button-add': this.theme == 'add',
+                'n-button-delete': this.theme == 'delete'
             }],
             attrs: {
                 href: this.href,
