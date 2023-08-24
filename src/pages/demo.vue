@@ -142,14 +142,14 @@
 
    <!-- venkat -->
 <div>
-    <nitrozen-heading level="h5" size="m">Heading</nitrozen-heading>
-    <nitrozen-heading level="h1"  color="gray" size="l">JioMart Main Heading</nitrozen-heading>
+    <nitrozen-heading level="h5" color="light-feedback-error-80" size="m">Heading</nitrozen-heading>
+    <nitrozen-heading level="h1"  color="secondary-50" size="l">JioMart Main Heading</nitrozen-heading>
     <br />
-    <nitrozen-heading level="h5" >Text</nitrozen-heading>
-    <nitrozen-text level="p" color="#666666" size="body-xs">JioMart Paragraph text</nitrozen-text>
+    <nitrozen-heading level="h5" color="primary-60">Text</nitrozen-heading>
+    <nitrozen-text level="p" color="primary-60" size="body-xs">JioMart Paragraph text</nitrozen-text>
     <br />
-    <nitrozen-heading level="h5" >Grid View</nitrozen-heading>
-    <nitrozen-heading level="h5" size='s'>Grid View - 4 column</nitrozen-heading>
+    <nitrozen-heading level="h5" color="secondary-50">Grid View</nitrozen-heading>
+    <nitrozen-heading level="h5" color="secondary-50" size='s'>Grid View - 4 column</nitrozen-heading>
     <nitrozen-grid gap="30px" template="1fr 1fr 1fr 1fr" templateMobile="1fr" templateTablet="1fr 1fr">
         <div class="story-box">
           <div>Eu proident velit cupidatat proident eiusmod ex consequat.</div>
@@ -277,7 +277,7 @@
           </div>
       <!-- Use the SidePanel component with its props -->
       <nitrozen-sidepanel
-        header="panelHeader"
+        header="Side Panel"
         :showClose="true"
         :isOpen="isPanelOpen"
         direction="left"
@@ -308,6 +308,7 @@
     description="Text"
     :close="true"
     ref="bottomSheet"
+    controlType="normal"
   >
   <p>
           Contrary to popular belief, Lorem Ipsum is not simply random text. It
@@ -324,7 +325,71 @@
           section 1.10.32.
         </p>
   </nitrozen-bottomsheet>
+  <div class="hover-new">
+      <nitrozen-button @click="openBottomSheetStepper()">Open Bottom Sheet Stepper</nitrozen-button>
     </div>
+    <nitrozen-bottomsheet
+      title="Your Jio Account"
+      description="Text"
+      :close="true"
+      ref="bottomSheetStepper"
+      :stepperConfig="stepperConfig"
+      controlType="stepper"
+    >
+    <template v-slot:dynamicContent="props">
+      <p v-if="props.currentStep === 0">Step 1 content</p>
+    <p v-if="props.currentStep === 1">Step 2 content</p>
+  </template>
+    </nitrozen-bottomsheet>
+    </div>
+    <nitrozen-heading level="h5" >Custom Scrollbar</nitrozen-heading>
+    
+    <nitrozen-scrollbar :hover="true">
+      <p >
+        Contrary to popular belief, Lorem Ipsum is not simply random text. It
+        has roots in a piece of classical Latin literature from 45 BC, making
+        it over 2000 years old. Richard McClintock, a Latin professor at
+        Hampden-Sydney College in Virginia, looked up one of the more obscure
+        Latin words, consectetur, from a Lorem Ipsum passage, and going through
+        the cites of the word in classical literature, discovered the
+        undoubtable source. Lorem Ipsum comes from sections 1.10.32 and
+        1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and
+        Evil) by Cicero, written in 45 BC. This book is a treatise on the
+        theory of ethics, very popular during the Renaissance. The first line
+        of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in
+        section 1.10.32.
+      </p>
+    </nitrozen-scrollbar>
+    <nitrozen-scrollbar :hover="false">
+      <p >
+        Contrary to popular belief, Lorem Ipsum is not simply random text. It
+        has roots in a piece of classical Latin literature from 45 BC, making
+        it over 2000 years old. Richard McClintock, a Latin professor at
+        Hampden-Sydney College in Virginia, looked up one of the more obscure
+        Latin words, consectetur, from a Lorem Ipsum passage, and going through
+        the cites of the word in classical literature, discovered the
+        undoubtable source. Lorem Ipsum comes from sections 1.10.32 and
+        1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and
+        Evil) by Cicero, written in 45 BC. This book is a treatise on the
+        theory of ethics, very popular during the Renaissance. The first line
+        of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in
+        section 1.10.32.
+      </p>
+    </nitrozen-scrollbar>
+
+    <nitrozen-heading level="h5" >Spacing</nitrozen-heading>
+<div>
+    <nitrozen-space position="horizontal" size="xl">
+      <p>This element has padding on all sides.</p>
+    </nitrozen-space>
+
+    <nitrozen-space position="bottom" size="m">
+      <p>This element has horizontal padding.</p>
+    </nitrozen-space>
+    <nitrozen-space size="s" position="vertical">
+      <p>This element has  vertical padding.</p>
+    </nitrozen-space>
+   </div>
     <div>
       <niotrozen-bottom-nav :items="staticNavItems" />
 
@@ -1395,6 +1460,15 @@ NitrozenRadio,"nitrozen-checkbox":NitrozenCheckBox,"nitrozen-toggle-btn":Nitroze
       secondaryButtonLabel: 'Secondary',
       description:"This is a notification message",
       isPanelOpen: false,
+      sheetContent: [
+        "Dynamic Content 1",
+        "Dynamic Content 2",
+      ],
+      stepperConfig: {
+        activeStep: 0,
+        onBack: this.onBackMethod, 
+        totalStep: 2
+      }
     };
   },
   mounted() {
@@ -1546,11 +1620,23 @@ NitrozenRadio,"nitrozen-checkbox":NitrozenCheckBox,"nitrozen-toggle-btn":Nitroze
       this.isPanelOpen = false;
     },
     openBottomSheet() {
-      this.$refs.bottomSheet.open();
+      if (this.$refs.bottomSheet) {
+        this.$refs.bottomSheet.open(); // Call the open method
+      }
+    },
+    openBottomSheetStepper() {
+      if (this.$refs.bottomSheetStepper) {
+        this.$refs.bottomSheetStepper.open(); // Call the open method
+      }
     },
     handleHeaderPrefixClick() {
       // Handle the header prefix click event here
     },
+    onBackMethod() {
+      if (this.stepperConfig.activeStep > 0) {
+        this.stepperConfig.activeStep--;
+      }
+    }
   },
 };
 </script>
